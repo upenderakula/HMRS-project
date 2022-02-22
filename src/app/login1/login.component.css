@@ -1,0 +1,20 @@
+.box{
+    width: 400px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15px;
+    box-shadow: 2px 2px 6px black;
+    margin: auto;
+    margin-bottom: auto; 
+   margin-top: 80px;
+}
+.form-group{
+    margin-top: 10px;
+    
+    padding: 5px;
+}
+h2{
+    text-align: center;
+
+    color:white;
+}

@@ -1,0 +1,118 @@
+<div class="card componentStyle">
+    <div style="text-align: right;margin-bottom: 5px;">
+        <a data-bs-toggle="modal" (click)="addLeave()" data-bs-target="#mpLeave" class="btn btn-primary">
+            <i class="fas fa-plus"></i>&nbsp; Apply Leave
+        </a>
+    </div>
+    <div>
+        <h3>You have Remain Leaves: {{remainleaves}} </h3>
+    </div>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th> Reason</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>NoOfDays</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let leave of lstLeave | paginate: { itemsPerPage: 5, currentPage: currentPage}">
+                <td>{{leave.reason}}</td>
+                <td>{{leave.fromDate}}</td>
+                <td>{{leave.toDate}}</td>
+                <td>{{leave.noOfDays}}</td>
+                <td>{{leave.description}}</td>
+                <td>{{leave.status}}</td>
+                <td>
+                    <a [routerLink]="['/leave',leave.leaveId]" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: center;">
+                    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="mpLeave" tabindex="-1" aria-labelledby="mpLeaveTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mpLeaveTitle">{{title}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="leaveForm">
+                        <table>
+                            <tr>
+                                <td>
+
+                                    <div class="form-group">
+                                        <label for="txtReason" class="col-form-label">Reason:</label>
+                                        <input [(ngModel)]="leaveModel.reason" name="txtReason" formControlName="reason"
+                                            class="form-control" id="txtReason">
+                                        <div class="alert alert-danger" *ngIf="reason.touched && reason.invalid">
+                                            * Reason required
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="txtFromDate" class="col-form-label">FromDate:</label>
+                                        <input type="date" [(ngModel)]="leaveModel.fromDate" formControlName="fromDate"
+                                            name="txtFromDate" class="form-control" id="txtFromDate">
+                                        <div class="alert alert-danger" *ngIf="fromDate.touched && fromDate.invalid">
+                                            * from date required
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="txtToDate" class="col-form-label">ToDate:</label>
+                                        <input onchange="days()" type="date" [(ngModel)]="leaveModel.toDate"
+                                            name="txtToDate" formControlName="toDate" class="form-control"
+                                            id="txtToDate">
+                                        <div class="alert alert-danger" *ngIf="toDate.touched && toDate.invalid">
+                                            *To date required
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="txtNoOfDays" class="col-form-label">NoOfDays:</label>
+                                        <input type="text" value="{{days}}" [(ngModel)]="leaveModel.noOfDays"
+                                            name="txtNoOfDays" formControlName="noOfDays" class="form-control"
+                                            id="txtNoOfDays">
+                                        <div class="alert alert-danger" *ngIf="noOfDays.touched && noOfDays.invalid">
+                                            * No of days required
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <div class="form-group">
+                                <label for="txtDescription" class="col-form-label">Description:</label>
+                                <textarea [(ngModel)]="leaveModel.description" formControlName="description"
+                                    name="txtDescription" class="form-control" id="txtDescription"></textarea>
+                                <div class="alert alert-danger" *ngIf="description.touched && description.invalid">
+                                    *Description required
+                                </div>
+                            </div>
+                        </table>
+                    </form>
+                </div>
+                <div class="modal-footer" style="margin-right: 30%;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" (click)="saveLeave()" class="btn btn-primary"
+                        data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

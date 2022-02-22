@@ -1,0 +1,7 @@
+.hideNavBar {
+    display: none !important;
+    }
+    .showNavBar {
+        display: inherit !important;
+    }
+    

@@ -1,0 +1,70 @@
+<div class="card componentStyle">
+    <div style="text-align: right;margin-bottom: 5px;">
+        <a data-bs-toggle="modal" (click)="addDepartment()" data-bs-target="#mpDepartment" class="btn btn-primary">
+            <i class="fas fa-plus"></i>&nbsp; ADD
+        </a>
+    </div>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th> Name</th>
+                <th>Description</th>
+                <th>Action(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let department of lstDepartment |paginate: { itemsPerPage: 5, currentPage: currentPage}">
+                <td>{{department.name}}</td>
+                <td>{{department. description}}</td>
+                <td>
+                    <a [routerLink]="['/department',department.id]" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                    &nbsp;
+                    <a (click)="editDepartment(department)" data-bs-toggle="modal" data-bs-target="#mpDepartment"
+                        class="btn btn-secondary"><i class="fas fa-pen-square"></i></a>&nbsp;
+                    <a (click)="deleteDepartment(department.id)" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="mpDepartment" tabindex="-1" aria-labelledby="mpDepartmentTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mpDepartmentTitle">{{title}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="deptForm">
+                        <div class="form-group">
+                            <label for="txtName" class="col-form-label">Name:</label>
+                            <input [(ngModel)]="departmentModel.name" formControlName="name" name="txtDescription"
+                                class="form-control" id="txtName">
+                            <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+                                *Name required
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtDescription" class="col-form-label">Description:</label>
+                            <textarea [(ngModel)]="departmentModel.description" formControlName="description" name="txt"
+                                type="text" class="form-control" id="txtDescription" cols="10" rows="5"></textarea>
+                            <div class="alert alert-danger" *ngIf="description.touched && description.invalid">
+                                * Description required
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" (click)="saveDepartment()" class="btn btn-primary"
+                        data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
