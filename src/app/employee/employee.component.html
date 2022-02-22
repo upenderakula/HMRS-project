@@ -16,6 +16,7 @@
             </tr>
         </thead>
         <tbody>
+            
             <tr *ngFor="let employee of lstEmployee |paginate: { itemsPerPage: 5, currentPage: currentPage}">
                 <td>{{employee.emailAddress}}</td>
                 <td>{{employee.department}}</td>
